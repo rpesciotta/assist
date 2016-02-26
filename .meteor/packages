@@ -22,3 +22,6 @@ accounts-ui
 accounts-password
 cfs:standard-packages
 cfs:gridfs
+aldeed:autoform
+aldeed:simple-schema
+aldeed:collection2
