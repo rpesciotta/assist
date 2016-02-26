@@ -3,18 +3,11 @@
     {{> loginButtons align="right"}}
   </div>
   <div class="main">
-    {{isHelpdeskUser}}
+    User role: {{#if isHelpdeskUser}}admin{{else}}user{{/if}}
     {{#if isHelpdeskUser}}
       {{> helpdesk}}
     {{else}}
       {{> consumer}}
     {{/if}}
   </div>
-  if !loggedin -> show login screen
-
-  if(ishelpdeskUser){
-    show helpdesk
-  }else{
-    show consumer
-  }
 </template>
