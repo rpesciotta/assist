@@ -21,3 +21,8 @@ insecure                # Allow all DB writes from clients (for prototyping)
 accounts-ui
 accounts-password
 codefights:blaze-material-ui
+cfs:standard-packages
+cfs:gridfs
+aldeed:autoform
+aldeed:simple-schema
+aldeed:collection2

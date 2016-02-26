@@ -1,6 +1,34 @@
 <template name="helpdesk">
    <div class="helpdesk">
       <h1>HelpDesk view</h1>
-      You are a helpdesk employee! Go forth and solve stuff..
+      <div id="newTicketArea">
+         {{> newTicket}}
+      </div>
+      <p>Tickets:</p>
+      {{#each tickets}}
+         <div class="btn btn-primary ticketlist">
+            <ul>
+            {{> ticketItem}}
+            </ul>
+         </div>
+      {{else}}
+         <p>No tickets on the system.</p>
+      {{/each}}
+   </div>
+</template>
+
+<template name="ticketItem">
+   <li>Prio: {{priority}}, User: {{userName}}, {{firstMsg _id}}</li>
+</template>
+
+<template name="newTicket">
+   <div class="newticket">
+      <form class="newticketForm">
+         <div class="form-group">
+            <label class="control-label">Problem</label>
+            <input type="text" id="newTicketText">
+            <button class='js-submit-ticket'>Submit</button>
+         </div>
+      </form>
    </div>
 </template>
