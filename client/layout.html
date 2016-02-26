@@ -2,7 +2,14 @@
   <div class="header">
     {{> loginButtons align="right"}}
   </div>
-
+  <div class="main">
+    {{isHelpdeskUser}}
+    {{#if isHelpdeskUser}}
+      {{> helpdesk}}
+    {{else}}
+      {{> consumer}}
+    {{/if}}
+  </div>
   if !loggedin -> show login screen
 
   if(ishelpdeskUser){
