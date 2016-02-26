@@ -3,7 +3,13 @@
 </head>
 
 <body>
+  if !loggedin -> show login screen
 
+  if(ishelpdeskUser){
+    show helpdesk
+  }else{
+    show consumer
+  }
 </body>
 
 <template name="consumer">
@@ -12,4 +18,6 @@
 
 <template name="helpdesk">
   You are a helpdesk employee! Go forth and solve stuff..
+
+
 </template>
