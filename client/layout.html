@@ -1,0 +1,13 @@
+<template name="layout">
+  <div class="header">
+    {{> loginButtons align="right"}}
+  </div>
+
+  if !loggedin -> show login screen
+
+  if(ishelpdeskUser){
+    show helpdesk
+  }else{
+    show consumer
+  }
+</template>
