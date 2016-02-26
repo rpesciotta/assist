@@ -1,6 +1,19 @@
 <template name="helpdesk">
    <div class="helpdesk">
       <h1>HelpDesk view</h1>
-      You are a helpdesk employee! Go forth and solve stuff..
+      {{#each tickets}}
+         Tickets:
+         <div class="ticketlist">
+            <ul>
+            {{> ticketItem}}
+            </ul>
+         </div>
+      {{else}}
+         <p>No tickets on the system.</p>
+      {{/each}}
    </div>
+</template>
+
+<template name="ticketItem">
+   <li>Prio: {{priority}}, User: {{userName}}, {{firstMsg _id}}</li>
 </template>
