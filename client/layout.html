@@ -1,20 +1,14 @@
 <template name="layout">
   <div class="header">
-    {{> loginButtons align="right"}}
+    {{> loginButtons}}
   </div>
+  <br>
   <div class="main">
-    {{isHelpdeskUser}}
+    User role: {{#if isHelpdeskUser}}admin{{else}}customer{{/if}}<br>
     {{#if isHelpdeskUser}}
       {{> helpdesk}}
     {{else}}
       {{> consumer}}
     {{/if}}
   </div>
-  if !loggedin -> show login screen
-
-  if(ishelpdeskUser){
-    show helpdesk
-  }else{
-    show consumer
-  }
 </template>
