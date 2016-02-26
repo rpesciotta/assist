@@ -1,10 +1,12 @@
 <template name="helpdesk">
    <div class="helpdesk">
       <h1>HelpDesk view</h1>
+      <div id="newTicketArea">
+         {{> newTicket}}
+      </div>
+      <p>Tickets:</p>
       {{#each tickets}}
-      <button class="btn btn-primary js-newticket">New ticket</button>
-         <p>Tickets:</p>
-         <div class="ticketlist">
+         <div class="btn btn-primary ticketlist">
             <ul>
             {{> ticketItem}}
             </ul>
@@ -24,7 +26,8 @@
       <form class="newticketForm">
          <div class="form-group">
             <label class="control-label">Problem</label>
-            <input type="text">
+            <input type="text" id="newTicketText">
+            <button class='js-submit-ticket'>Submit</button>
          </div>
       </form>
    </div>

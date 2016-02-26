@@ -48,7 +48,7 @@ Meteor.startup(function () {
        ticketId: sampleTicketId,
        type: 2, // message
        data: "The front door lock is not working properly",
-       timestamp: timestamp,
+       timestamp: timestamp
     });
    Tickets.update({_id: sampleTicketId}, {$set:{ firstHistoryId: sampleTicketId}})
 

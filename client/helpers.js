@@ -13,14 +13,18 @@ Template.helpdesk.helpers({
 });
 
 Template.helpdesk.events({
-   'click .js-newticket': function(event) {
+   'submit .newticketForm': function(event) {
       event.preventDefault();
-      Template.render('newTicket');
+      Meteor.call('newTicket', {
+         priority: 'Medium',
+         data: $(event.target).find('#newTicketText').val()
+      });
    }
 });
 
 Template.ticketItem.helpers({
    'firstMsg': function(id){
-      return String(TicketHistory.findOne({ticketId:id}).data).substring(0,50);
+      var history = TicketHistory.findOne({ticketId:id})
+      return history ? String(history.data).substring(0,50) : "no data";
    }
 });
