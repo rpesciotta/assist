@@ -2,7 +2,8 @@
    <div class="helpdesk">
       <h1>HelpDesk view</h1>
       {{#each tickets}}
-         Tickets:
+      <button class="btn btn-primary js-newticket">New ticket</button>
+         <p>Tickets:</p>
          <div class="ticketlist">
             <ul>
             {{> ticketItem}}
@@ -16,4 +17,15 @@
 
 <template name="ticketItem">
    <li>Prio: {{priority}}, User: {{userName}}, {{firstMsg _id}}</li>
+</template>
+
+<template name="newTicket">
+   <div class="newticket">
+      <form class="newticketForm">
+         <div class="form-group">
+            <label class="control-label">Problem</label>
+            <input type="text">
+         </div>
+      </form>
+   </div>
 </template>
