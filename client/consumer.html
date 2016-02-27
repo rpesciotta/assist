@@ -24,17 +24,17 @@
             </button>
           </div>
           <div class="priority">
-            <label class="mdl-radioX mdl-js-radio" for="Low">
+            <label for="Low">
                <input type="radio" name="priority" class="mdl-radioX__button" value="Low">
-               <span class="mdl-radioX__label">no priority</span>
+               <span>no priority</span>
             </label>
-            <label class="mdl-radioX mdl-js-radio" for="Medium">
+            <label for="Medium">
                <input type="radio" name="priority" class="mdl-radioX__button" value="Medium">
-               <span class="mdl-radioX__label">fix today</span>
+               <span>fix today</span>
             </label>
-            <label class="mdl-radioX mdl-js-radio" for="High">
+            <label for="High">
                <input type="radio" name="priority" class="mdl-radioX__button" value="High">
-               <span class="mdl-radioX__label">A.S.A.P.</span>
+               <span>A.S.A.P.</span>
             </label>
           </div>
         </div>
@@ -47,7 +47,7 @@
 </template>
 
 <template name="consumerIssues">
-  {{#each consumerIssues}}
+  {{#each tickets}}
     {{> issueCard}}
   {{/each}}
 </template>
@@ -55,10 +55,16 @@
 <template name="issueCard">
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__actions mdl-card--border issueCard">
-      <div class="issueHeading">
-        <span class="statusText">{{status}}</span>
-        <span class="headingText">{{description}}</span>
-        <span class="badge" style="float:right;background-color:{{prioColor priority}}">{{priority}}</span>
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone mdl-cell--2-col-tablet issueHeading">
+          <span class="statusText">{{status}}</span>
+        </div>
+        <div class="mdl-cell mdl-cell--7-col mdl-cell--2-col-phone mdl-cell--4-col-tablet headingText">
+          {{firstMsg _id}}
+        </div>
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+          <span class="badge" style="background-color:{{prioColor priority}}">{{priority}}</span>
+        </div>
       </div>
       <div class="issueDetails">
         <div class="mdl-card__actions mdl-card--border">

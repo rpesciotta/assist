@@ -6,10 +6,16 @@ Template.registerHelper('formatDate', function(date) {
 	return moment(date).format('lll');
 });
 
+Template.registerHelper('tickets', function() {
+  return Tickets.find();
+});
+
+Template.registerHelper('firstMsg',function(id){
+   var history = TicketHistory.findOne({ticketId:id})
+   return history ? String(history.data).substring(0,50) : "no data";
+});
+
 Template.helpdesk.helpers({
-   'tickets': function() {
-      return Tickets.find();
-   },
    'ticketSelected': function() {
       return Session.get('ticketSelected');
    }
@@ -41,11 +47,7 @@ Template.helpdesk.events({
 Template.ticketList.helpers({
    'tickets': function() {
       return Tickets.find();
-   },
-   'firstMsg': function(id){
-      var history = TicketHistory.findOne({ticketId:id})
-      return history ? String(history.data).substring(0,50) : "no data";
-   },
+   }
 });
 
 Template.ticketList.events({
