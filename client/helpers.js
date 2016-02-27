@@ -1,9 +1,9 @@
 function timeToSolve(prio){
    switch(prio) {
       case 'Low': return 3600; // 1h
-      case 'Medium': return 300; // 30m
-      case 'High': return 3600/4; // 15min
-      default: return 3600; // 1 hour
+      case 'Medium': return 600; // 10m
+      case 'High': return 120; // 2min
+      default: return 3600; // 1 hour - safety default value
    }
 }
 
@@ -42,7 +42,13 @@ Template.registerHelper('formatFromNow', function(date) {
 })
 
 Template.registerHelper('tickets', function() {
-  return Tickets.find({}, { sort: { createdAt: -1 }} );
+  let returns = Tickets.find({}).fetch().map((t) => {
+     var createdAt = moment(t.createdAt);
+     var target = moment(createdAt).add(timeToSolve(t.priority),'seconds');
+     t.sortField = moment(target).subtract(moment(createdAt));
+     return t;
+  });
+  return _.sortBy(returns, (item) => item.sortField);
 });
 
 Template.registerHelper('firstMsg',function(id){
@@ -57,7 +63,7 @@ Template.helpdesk.helpers({
 });
 
 Template.newIssueForm.events({
-   'click .js-submit-ticket': function(event) {
+   'click .js-submit-ticket'(event) {
       console.log("test");
       event.preventDefault();
 
@@ -143,10 +149,11 @@ Template.ticketCard.helpers({
    },
    'notInProgress': function() {
       var ticket = Tickets.findOne(Session.get('ticketSelected'));
-      console.log('ticket: ',ticket);
-      let result = ticket && ticket.status == 'New';
-      console.log('returning ',result);
-      return result;
+      return ticket && ticket.status == 'New';
+   },
+   'ticketNotClosed': function() {
+      var ticket = Tickets.findOne(Session.get('ticketSelected'));
+      return ticket && ticket.status != 'Closed';
    }
 });
 
