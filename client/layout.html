@@ -3,7 +3,6 @@
     {{> loginButtons align="right"}}
   </div>
   <div class="main">
-    User role: {{#if isHelpdeskUser}}admin{{else}}user{{/if}}
     {{#if isHelpdeskUser}}
       {{> helpdesk}}
     {{else}}

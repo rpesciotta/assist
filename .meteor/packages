@@ -25,3 +25,4 @@ cfs:gridfs
 aldeed:autoform
 aldeed:simple-schema
 aldeed:collection2
+momentjs:moment
