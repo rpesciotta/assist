@@ -1,0 +1,5 @@
+{ "galaxy.meteor.com": 
+  { "env": 
+    { "ROOT_URL": "http://assist.meteorapp.com", "MONGO_URL": "mongodb://db:assist@ds041683.mlab.com:41683/assist" } 
+  } 
+}
