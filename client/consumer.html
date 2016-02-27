@@ -54,13 +54,13 @@
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__actions mdl-card--border issueCard">
       <div class="mdl-grid issueHeading">
-        <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+        <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--1-col-phone mdl-cell--1-col-tablet">
           <span class="statusText">{{status}}</span>
         </div>
-        <div class="mdl-cell mdl-cell--7-col mdl-cell--2-col-phone mdl-cell--4-col-tablet headingText">
+        <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet headingText">
           {{firstMsg _id}}
         </div>
-        <div class="mdl-cell mdl-cell--3-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+        <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--1-col-phone mdl-cell--1-col-tablet">
           <span class="badge" style="background-color:{{prioColor priority}}">{{priority}}</span>
         </div>
       </div>
@@ -71,6 +71,11 @@
              {{#each history _id}}
                {{> ticketCardItems}}
              {{/each}}
+             <div style="float:right;">
+               <button class="mdl-button mdl-js-button mdl-button--accent" style="color:red">
+                Mark as fixed
+              </button>
+             </div>
           </div>
         </div>
       </div>
