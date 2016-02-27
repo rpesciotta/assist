@@ -12,7 +12,7 @@ Template.registerHelper("isHelpdeskUser", function(){
 });
 
 Template.registerHelper('formatDate', function(date) {
-	return moment(date).format('lll');
+	return moment(date).format('MMM D, HH:mm');
 });
 
 Template.registerHelper('timeToExpire', function(ticketId) {
@@ -138,6 +138,9 @@ Template.ticketList.events({
 Template.ticketCard.helpers({
    'ticketSelected': function() {
       return Session.get('ticketSelected');
+   },
+   'getSelectedTicket': function(ticketId){
+      return Tickets.findOne(ticketId);
    }
 });
 

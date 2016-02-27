@@ -76,7 +76,19 @@
 
 <template name="ticketCard">
    <div class="ticketCard">
-      Opened at: {{formatDate timestamp}}
+      {{#with getSelectedTicket ticketSelected}}
+      <ul class="demo-list-item mdl-list">
+         <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">Opened by</span>{{userName}}
+         </li>
+         <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">Opened at</span>{{formatDate timestamp}}
+         </li>
+         <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">Priority</span>{{priority}}
+         </li>
+      </ul>
+      {{/with}}
       {{#each history ticketSelected}}
         {{> ticketCardItems}}
       {{/each}}
