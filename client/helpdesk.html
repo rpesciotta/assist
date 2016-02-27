@@ -4,7 +4,7 @@
       <div id="newTicketArea">
          {{> newTicket}}
       </div>
-      <p>Tickets:</p>
+      <h3>Tickets:</h3>
       {{#each tickets}}
          <div class="btn btn-primary ticketlist">
             <ul>
@@ -18,14 +18,16 @@
 </template>
 
 <template name="ticketItem">
-   <li>Prio: {{priority}}, User: {{userName}}, {{firstMsg _id}}</li>
+   <li>Prio: {{priority}}, User: {{userName}}, {{firstMsg _id}}{{#if url}}, <a href="{{url}}">File attachment</a>{{/if}}</li>
 </template>
 
 <template name="newTicket">
    <div class="newticket">
       <form class="newticketForm">
+         <h3>New Problem</h3>
+         Picture: <input type="file" id="newTicketFile">
          <div class="form-group">
-            <label class="control-label">Problem</label>
+            <label class="control-label">Description</label>
             <input type="text" id="newTicketText">
             <button class='js-submit-ticket'>Submit</button>
          </div>
