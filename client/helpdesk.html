@@ -24,7 +24,7 @@
                        <th class="mdl-data-table__cell--non-numeric">User</th>
                        <th class="mdl-data-table__cell--non-numeric table-header-right">Prio</th>
                        <th class="mdl-data-table__cell--non-numeric table-header-right">Summary</th>
-                       <th class="mdl-data-table__cell--non-numeric table-header-right">Image</th>
+                       <th class="mdl-data-table__cell--non-numeric table-header-right">Time left</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -88,7 +88,10 @@
          <td class="mdl-data-table__cell--non-numeric" id="{{_id}}">{{userName}}</td>
          <td class="mdl-data-table__cell--non-numeric" id="{{_id}}">{{priority}}</td>
          <td class="mdl-data-table__cell--non-numeric" id="{{_id}}">{{firstMsg _id}}</td>
-         <td class="mdl-data-table__cell--non-numeric" id="{{_id}}"><a href="{{url}}">File attachment</a></td>
+         <td class="mdl-data-table__cell--non-numeric" id="{{_id}}">
+            {{timeToExpire _id}}
+            <div id="progress" class="mdl-progress mdl-js-progress"></div>
+         </td>
        </tr>
    {{/each}}
 </template>
