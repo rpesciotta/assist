@@ -97,22 +97,26 @@
    <div class="ticketCard">
       Opened at: {{formatDate timestamp}}
       {{#each history ticketSelected}}
-         <table><tr class="row">
-            <td class="timestamp header"><small>{{formatDate timestamp}}</small></td>
-            <td class="header">{{userName}}</td>
-         {{#if isMessage _id}}
-            <td class="chat-message">
-               {{data}}
-               {{#if url}}
-                  <br><center><img src="{{url}}" class="thumbnail"></center>
-               {{/if}}
-            </td>
-         {{else}}
-            {{#if isStatusChange _id}}
-               <td class="chat-message">Status updated to <b>{{data}}</b></td>
-            {{/if}}
-         {{/if}}
-      </tr></table>
+        {{> ticketCardItems}}
       {{/each}}
    </div>
+</template>
+
+<template name="ticketCardItems">
+  <table><tr class="row">
+     <td class="timestamp header"><small>{{formatDate timestamp}}</small></td>
+     <td class="header">{{userName}}</td>
+  {{#if isMessage _id}}
+     <td class="chat-message">
+        {{data}}
+        {{#if url}}
+           <br><center><img src="{{url}}" class="thumbnail"></center>
+        {{/if}}
+     </td>
+  {{else}}
+     {{#if isStatusChange _id}}
+        <td class="chat-message">Status updated to <b>{{data}}</b></td>
+     {{/if}}
+  {{/if}}
+  </tr></table>
 </template>

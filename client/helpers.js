@@ -64,16 +64,17 @@ Template.ticketList.events({
 });
 
 Template.ticketCard.helpers({
-   'history': function(ticketId) {
-      return TicketHistory.find({ticketId: ticketId});
-   },
    'ticketSelected': function() {
       return Session.get('ticketSelected');
-   },
-   'isMessage': function(historyId) {
-      return TicketHistory.findOne(historyId).type == 2;
-   },
-   'isStatusChange': function(historyId) {
-      return TicketHistory.findOne(historyId).type == 1;
    }
+});
+
+Template.registerHelper('history', function(ticketId) {
+   return TicketHistory.find({ticketId: ticketId});
+});
+Template.registerHelper('isMessage', function(historyId) {
+  return TicketHistory.findOne(historyId).type == 2;
+});
+Template.registerHelper('isStatusChange', function(historyId) {
+  return TicketHistory.findOne(historyId).type == 1;
 });
