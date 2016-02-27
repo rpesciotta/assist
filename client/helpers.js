@@ -78,29 +78,6 @@ Template.newIssueForm.events({
       }
 
       Meteor.call('newTicket', issue);
-   },
-
-   'click .js-update-ticket': function(event) {
-      event.preventDefault();
-      let ticketId = $(event.target).closest('.ticketCard').attr('id');
-      console.log('updating ticket ',ticketId);
-
-      let update = {
-         data: $('#updateTicketText').val(),
-         ticketId: ticketId
-      }
-      console.log('update: ',update);
-
-      var file = $('#updateTicketFile').get(0).files[0];
-      if (file) {
-         var fileFs = new FS.File(file);
-         var fileId = Files.insert(fileFs, function(err, result) {
-            if(err) throw new Meteor.Error(err);
-         });
-         update.fileId = fileId._id;
-      }
-
-      Meteor.call('newHistory', update);
    }
 });
 
@@ -163,6 +140,13 @@ Template.ticketCard.helpers({
    },
    'getSelectedTicket': function(ticketId){
       return Tickets.findOne(ticketId);
+   },
+   'notInProgress': function() {
+      var ticket = Tickets.findOne(Session.get('ticketSelected'));
+      console.log('ticket: ',ticket);
+      let result = ticket && ticket.status == 'New';
+      console.log('returning ',result);
+      return result;
    }
 });
 
@@ -189,6 +173,13 @@ Template.ticketCard.events({
       }
 
       Meteor.call('newHistory', update);
+   },
+
+   'click .js-start-progress': function(event) {
+      event.preventDefault();
+      let ticketId = Session.get('ticketSelected');
+      console.log('starting progress on ticket ',ticketId);
+      Meteor.call('startProgress', ticketId);
    }
 });
 

@@ -37,32 +37,39 @@ Template.issueCard.events({
     const issueDetails  = issueCard.children(".issueDetails");
     issueDetails.toggle(200);
     issueCard.toggleClass("cardVisible");
-},
-'click .js-update-ticket': function(event) {
-   event.preventDefault();
-   let $ticketCard = $(event.target).closest('.ticketCard');
-   let ticketId = $ticketCard.attr('id');
-   console.log('consumer UI: updating ticket ',ticketId);
+   },
+   'click .js-update-ticket': function(event) {
+      event.preventDefault();
+      let $ticketCard = $(event.target).closest('.ticketCard');
+      let ticketId = $ticketCard.attr('id');
+      console.log('consumer UI: updating ticket ',ticketId);
 
-   let $textInput = $ticketCard.find('#updateTicketText');
-   let update = {
-      data: $textInput.val(),
-      ticketId: ticketId
+      let $textInput = $ticketCard.find('#updateTicketText');
+      let update = {
+         data: $textInput.val(),
+         ticketId: ticketId
+      }
+      console.log('update: ',update);
+
+      var $fileInput = $ticketCard.find('#updateTicketFile');
+      var file = $fileInput.get(0).files[0];
+      if (file) {
+         var fileFs = new FS.File(file);
+         var fileId = Files.insert(fileFs, function(err, result) {
+            if(err) throw new Meteor.Error(err);
+         });
+         update.fileId = fileId._id;
+      }
+
+      Meteor.call('newHistory', update);
+      $fileInput.val('');
+      $textInput.val('');
+   },
+
+   'click .js-close-ticket': function(event) {
+      event.preventDefault();
+      let ticketId = $(event.target).closest('.ticketCard').attr('id');
+      console.log('consumer UI: closing ticket ',ticketId);
+      Meteor.call('closeTicket', ticketId);
    }
-   console.log('update: ',update);
-
-   var $fileInput = $ticketCard.find('#updateTicketFile');
-   var file = $fileInput.get(0).files[0];
-   if (file) {
-      var fileFs = new FS.File(file);
-      var fileId = Files.insert(fileFs, function(err, result) {
-         if(err) throw new Meteor.Error(err);
-      });
-      update.fileId = fileId._id;
-   }
-
-   Meteor.call('newHistory', update);
-   $fileInput.val('');
-   $textInput.val('');
-}
 });

@@ -76,6 +76,13 @@
 
 <template name="ticketCard">
    <div class="ticketCard">
+
+      {{#if notInProgress}}
+      <div style="float:right;">
+         <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent js-start-progress" value="Start Progress"/>
+      </div><br>
+      {{/if}}
+
       {{#with getSelectedTicket ticketSelected}}
       <ul class="demo-list-item mdl-list">
          <li class="mdl-list__item">
