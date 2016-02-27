@@ -3,20 +3,8 @@
       <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
        <main class="mdl-layout__content mdl-color--grey-100">
          <div class="mdl-grid demo-content">
-            <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-             <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop">
-               <use xlink:href="#piechart" mask="url(#piemask)" />
-               <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">2</text>
-             </svg>
-             <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop">
-               <use xlink:href="#piechart" mask="url(#piemask)" />
-               <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">10</text>
-             </svg>
-             <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop">
-               <use xlink:href="#piechart" mask="url(#piemask)" />
-               <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">2</text>
-             </svg>
-            </div>
+
+
             <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" width="100%">
                   <thead>
@@ -78,9 +66,11 @@
          <td class="mdl-data-table__cell--non-numeric" id="{{_id}}">{{firstMsg _id}}</td>
          <td class="mdl-data-table__cell--non-numeric" id="{{_id}}">
             {{timeToExpire _id}}
-            <div id="progress" class="mdl-progress mdl-js-progress"></div>
+            <div id="progress" class="mdl-progress mdl-js-progress customProgress"></div>
          </td>
        </tr>
+   {{else}}
+      <tr><td>No tickets found.</td></tr>
    {{/each}}
 </template>
 

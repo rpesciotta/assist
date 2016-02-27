@@ -27,15 +27,14 @@ Template.registerHelper('timeToExpire', function(ticketId) {
          var createdAt = moment(ticket.createdAt);
          var target = moment(createdAt).add(timeToSolve(ticket.priority),'seconds');
          if (!moment(target).isBefore(moment()) ) {
-            return 'Expires in '+moment().to(moment(target));
+            return 'Expires '+moment().to(moment(target));
          }
          else {
             return 'Expired '+moment().to(moment(target));
          }
       }
-      else return "Expires at some point...";
+      else return "";
    }
-	return moment(date).format('lll');
 });
 
 Template.registerHelper('formatFromNow', function(date) {
@@ -128,37 +127,10 @@ Template.ticketList.events({
       var currentId = $(event.target).attr('id');
 
       if (Session.get('ticketSelected')==currentId) {
-         Session.clear('ticketSelected');
+         Session.set('ticketSelected',undefined);
       }
       else {
          Session.set('ticketSelected', currentId);
-      }
-   },
-   'mdl-componentupgraded #progress': function(event) {
-      var ticketId = $(event.target).closest('tr').attr('id');
-      if(ticketId) {
-         var currentProgress = Session.get(ticketId+'-progress');
-         if (!currentProgress) {
-            currentProgress = 100;
-         }
-         else {
-            // calculate what should be the current progress
-            var ticket = Tickets.findOne(ticketId);
-            if (ticket) {
-               var createdAt = moment(ticket.createdAt);
-               var diff = moment(createdAt).diff(moment(), 'seconds');
-               console.log('diff: ',diff);
-               // hard-coding 10h
-               currentProgress = -timeToSolve(ticket.priority)/diff;
-            }
-         }
-
-         Session.set(ticketId+'-progress', currentProgress);
-         event.target.MaterialProgress.setProgress(currentProgress);
-
-      }
-      else {
-         console.log('no ticketId found for this ticket element');
       }
    }
 });

@@ -98,6 +98,7 @@ img.thumbnail {
    width:95%;
    height:auto;
    padding-top: 10px;
+   padding-bottom: 10px;
 }
 
 .ticketCard .timestamp {
@@ -111,4 +112,8 @@ img.thumbnail {
 
 .ticketCard .header {
    padding-top: 10px;
+}
+
+.mdl-progress.customProgress {
+   width:300px;
 }
