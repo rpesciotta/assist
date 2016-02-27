@@ -7,11 +7,11 @@ Template.registerHelper('formatDate', function(date) {
 });
 
 Template.registerHelper('tickets', function() {
-  return Tickets.find();
+  return Tickets.find({}, { sort: { createdAt: -1 }} );
 });
 
 Template.registerHelper('firstMsg',function(id){
-   var history = TicketHistory.findOne({ticketId:id})
+   var history = TicketHistory.findOne({ticketId:id});
    return history ? String(history.data).substring(0,50) : "no data";
 });
 
@@ -21,24 +21,28 @@ Template.helpdesk.helpers({
    }
 });
 
-Template.helpdesk.events({
-   'submit .newticketForm': function(event) {
+Template.newIssueForm.events({
+   'click .js-submit-ticket': function(event) {
+      console.log("test");
       event.preventDefault();
 
-      // upload file first
+      let formElem = $("form.newticketForm");
+
+      let issue = {
+         priority: formElem.find("input:radio[name='priority']:checked").val(),
+         data: formElem.find('#newTicketText').val(),
+      }
+
       var file = $('#newTicketFile').get(0).files[0];
       if (file) {
          var fileFs = new FS.File(file);
          var fileId = Files.insert(fileFs, function(err, result) {
             if(err) throw new Meteor.Error(err);
          });
+         issue.fileId = fileId._id;
       }
 
-      Meteor.call('newTicket', {
-         priority: 'Medium',
-         data: $(event.target).find('#newTicketText').val(),
-         fileId: fileId._id
-      });
+      Meteor.call('newTicket', issue);
 
    }
 });
@@ -70,7 +74,7 @@ Template.ticketCard.helpers({
 });
 
 Template.registerHelper('history', function(ticketId) {
-   return TicketHistory.find({ticketId: ticketId});
+   return TicketHistory.find({ticketId: ticketId},{sort: {timeStamp: -1}});
 });
 Template.registerHelper('isMessage', function(historyId) {
   return TicketHistory.findOne(historyId).type == 2;

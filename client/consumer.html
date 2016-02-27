@@ -9,41 +9,45 @@
     <div class="mdl-card__title">
       <h2 class="mdl-card__title-text">New issue</h2>
     </div>
-      <form action="#">
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--6-col-tablet">
-            <div class="mdl-textfield mdl-js-textfield">
-              <input class="mdl-textfield__input" type="text">
-              <label class="mdl-textfield__label">Description of the issue</label>
-            </div>
-          </div>
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-              <i class="material-icons">add_a_photo</i>
-            </button>
-          </div>
-          <div class="priority">
-            <label for="Low">
-               <input type="radio" name="priority" class="mdl-radioX__button" value="Low">
-               <span>no priority</span>
-            </label>
-            <label for="Medium">
-               <input type="radio" name="priority" class="mdl-radioX__button" value="Medium">
-               <span>fix today</span>
-            </label>
-            <label for="High">
-               <input type="radio" name="priority" class="mdl-radioX__button" value="High">
-               <span>A.S.A.P.</span>
-            </label>
-          </div>
-        </div>
-      </form>
-    <button class="mdl-button mdl-js-button mdl-button--raised">
-      Send
-    </button>
+    {{> newIssueForm}}
   </div>
 </template>
 
+<template name="newIssueForm">
+  <form class="newticketForm" action="#">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--6-col-tablet">
+        <div class="mdl-textfield mdl-js-textfield">
+          <input id="newTicketText" class="mdl-textfield__input" type="text">
+          <label class="mdl-textfield__label">Plumbing, noise, lighting etc.</label>
+        </div>
+      </div>
+      <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="showFileupload">
+          <i class="material-icons">add_a_photo</i>
+        </button>
+        <input type="file" accept="image/*;capture=camera" id="newTicketFile">
+      </div>
+      <div class="priority">
+        <span style="padding-left:10px;font-weight:bold">Priority</span>
+        <label for="Low">
+           <input type="radio" name="priority" value="Low" required/>
+           <span>Low</span>
+        </label>
+        <label for="Medium">
+           <input type="radio" name="priority" value="Medium"/>
+           <span>Medium</span>
+        </label>
+        <label for="High">
+           <input type="radio" name="priority" value="High"/>
+           <span>High</span>
+        </label>
+      </div>
+    </div>
+  </form>
+  <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored js-submit-ticket" value="Send"/>
+
+</template>
 <template name="consumerIssues">
   {{#each tickets}}
     {{> issueCard}}

@@ -47,6 +47,7 @@
                   </div>
                </div>
              </div>
+             {{>newIssue}}
              <div class="demo-separator mdl-cell--1-col"></div>
 
             </div>
@@ -68,19 +69,6 @@
     </div>
 </template>
 
-<template name="newTicket">
-   <div class="newticket">
-      <form class="newticketForm">
-         <h3>New Problem</h3>
-         Picture: <input type="file" id="newTicketFile">
-         <div class="form-group">
-            <label class="control-label">Description</label>
-            <input type="text" id="newTicketText">
-            <button class='js-submit-ticket'>Submit</button>
-         </div>
-      </form>
-   </div>
-</template>
 
 <template name="ticketList">
    {{#each tickets}}
