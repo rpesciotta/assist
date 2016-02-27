@@ -1,3 +1,12 @@
+function timeToSolve(prio){
+   switch(prio) {
+      case 'Low': return 3600; // 1h
+      case 'Medium': return 300; // 30m
+      case 'High': return 3600/4; // 15min
+      default: return 3600; // 1 hour
+   }
+}
+
 Template.registerHelper("isHelpdeskUser", function(){
    return Meteor.user() && !!Meteor.user().isAdmin;
 });
@@ -5,6 +14,33 @@ Template.registerHelper("isHelpdeskUser", function(){
 Template.registerHelper('formatDate', function(date) {
 	return moment(date).format('lll');
 });
+
+Template.registerHelper('timeToExpire', function(ticketId) {
+   var currentProgress = Session.get(ticketId+'-progress');
+   if (currentProgress==undefined) {
+      return "Expires at some point...";
+   }
+   else {
+      // calculate what should be the current progress
+      var ticket = Tickets.findOne(ticketId);
+      if (ticket) {
+         var createdAt = moment(ticket.createdAt);
+         var target = moment(createdAt).add(timeToSolve(ticket.priority),'seconds');
+         if (!moment(target).isBefore(moment()) ) {
+            return 'Expires in '+moment().to(moment(target));
+         }
+         else {
+            return 'Expired '+moment().to(moment(target));
+         }
+      }
+      else return "Expires at some point...";
+   }
+	return moment(date).format('lll');
+});
+
+Template.registerHelper('formatFromNow', function(date) {
+   return String(moment(date).fromNow());
+})
 
 Template.registerHelper('tickets', function() {
   return Tickets.find({}, { sort: { createdAt: -1 }} );
@@ -48,6 +84,39 @@ Template.newIssueForm.events({
 });
 
 // new template
+Template.ticketList.onRendered(() => {
+   // callback to update timer
+   this.setInterval(() => {
+      $('.mdl-progress').each(function() {
+         let currentElem = $(this);
+         var ticketId = currentElem.closest('tr').attr('id');
+         if(ticketId) {
+            var currentProgress = Session.get(ticketId+'-progress');
+            if (currentProgress==undefined) {
+               currentProgress = 100;
+            }
+            else {
+               // calculate what should be the current progress
+               var ticket = Tickets.findOne(ticketId);
+               if (ticket) {
+                  var createdAt = moment(ticket.createdAt);
+                  var diff = moment(createdAt).diff(moment(), 'seconds');
+                  currentProgress = 100-100*(-diff/timeToSolve(ticket.priority));
+                  if (currentProgress < 0) currentProgress = 0;
+               }
+            }
+
+            Session.set(ticketId+'-progress', currentProgress);
+            currentElem.get(0).MaterialProgress.setProgress(currentProgress);
+
+         }
+         else {
+            console.log('no ticketId found for this ticket element');
+         }
+      });
+   }, 1000);
+});
+
 Template.ticketList.helpers({
    'tickets': function() {
       return Tickets.find();
@@ -63,6 +132,33 @@ Template.ticketList.events({
       }
       else {
          Session.set('ticketSelected', currentId);
+      }
+   },
+   'mdl-componentupgraded #progress': function(event) {
+      var ticketId = $(event.target).closest('tr').attr('id');
+      if(ticketId) {
+         var currentProgress = Session.get(ticketId+'-progress');
+         if (!currentProgress) {
+            currentProgress = 100;
+         }
+         else {
+            // calculate what should be the current progress
+            var ticket = Tickets.findOne(ticketId);
+            if (ticket) {
+               var createdAt = moment(ticket.createdAt);
+               var diff = moment(createdAt).diff(moment(), 'seconds');
+               console.log('diff: ',diff);
+               // hard-coding 10h
+               currentProgress = -timeToSolve(ticket.priority)/diff;
+            }
+         }
+
+         Session.set(ticketId+'-progress', currentProgress);
+         event.target.MaterialProgress.setProgress(currentProgress);
+
+      }
+      else {
+         console.log('no ticketId found for this ticket element');
       }
    }
 });
