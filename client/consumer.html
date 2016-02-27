@@ -11,20 +11,38 @@
     </div>
     <div class="mdl-card__supporting-text">
       <form action="#">
-        <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="sample1">
-          <label class="mdl-textfield__label" for="sample1">Description of the issue</label>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--6-col-tablet">
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text">
+              <label class="mdl-textfield__label">Description of the issue</label>
+            </div>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+              <i class="material-icons">add_a_photo</i>
+            </button>
+          </div>
+          <div class="priority">
+            <label class="mdl-radioX mdl-js-radio" for="Low">
+               <input type="radio" name="priority" class="mdl-radioX__button" value="Low">
+               <span class="mdl-radioX__label">no priority</span>
+            </label>
+            <label class="mdl-radioX mdl-js-radio" for="Medium">
+               <input type="radio" name="priority" class="mdl-radioX__button" value="Medium">
+               <span class="mdl-radioX__label">fix today</span>
+            </label>
+            <label class="mdl-radioX mdl-js-radio" for="High">
+               <input type="radio" name="priority" class="mdl-radioX__button" value="High">
+               <span class="mdl-radioX__label">A.S.A.P.</span>
+            </label>
+          </div>
         </div>
       </form>
     </div>
     <button class="mdl-button mdl-js-button mdl-button--raised">
       Send
     </button>
-    <div class="mdl-card__menu">
-      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-        <i class="material-icons">add_a_photo</i>
-      </button>
-    </div>
   </div>
 </template>
 

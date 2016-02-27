@@ -47,3 +47,8 @@ span.badge {
 .cardVisible .issueHeading heading{
   font-size:1.2em;
 }
+
+#login-buttons a{
+  color:white;
+  font-weight:bold;
+}
