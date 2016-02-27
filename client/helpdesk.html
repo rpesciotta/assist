@@ -35,7 +35,7 @@
                   </div>
                </div>
              </div>
-             {{>newIssue}}
+             <!-- {{>newIssue}} -->
              <div class="demo-separator mdl-cell--1-col"></div>
 
             </div>
@@ -92,6 +92,28 @@
       {{#each history ticketSelected}}
         {{> ticketCardItems}}
       {{/each}}
+      <ul class="demo-list-item mdl-list">
+         <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">Add new comment</span>
+         </li>
+      </ul>
+      <form class="updateticketForm" action="#">
+         <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--6-col-tablet">
+              <div class="mdl-textfield mdl-js-textfield">
+                <input id="updateTicketText" class="mdl-textfield__input" type="text">
+                <label class="mdl-textfield__label">New comment</label>
+              </div>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+              <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="showFileupload">
+                <i class="material-icons">add_a_photo</i>
+              </button>
+              <input type="file" accept="image/*;capture=camera" id="updateTicketFile">
+            </div>
+         </div>
+      </form>
+      <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored js-update-ticket" value="Send"/>
    </div>
 </template>
 

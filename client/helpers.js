@@ -64,7 +64,7 @@ Template.newIssueForm.events({
       let formElem = $("form.newticketForm");
 
       let issue = {
-         priority: formElem.find("input:radio[name='priority']:checked").val(),
+         priority: formElem.find("input:radio[name='priority']:checked").val() || 'Low',
          data: formElem.find('#newTicketText').val(),
       }
 
@@ -78,7 +78,29 @@ Template.newIssueForm.events({
       }
 
       Meteor.call('newTicket', issue);
+   },
 
+   'click .js-update-ticket': function(event) {
+      event.preventDefault();
+      let ticketId = $(event.target).closest('.ticketCard').attr('id');
+      console.log('updating ticket ',ticketId);
+
+      let update = {
+         data: $('#updateTicketText').val(),
+         ticketId: ticketId
+      }
+      console.log('update: ',update);
+
+      var file = $('#updateTicketFile').get(0).files[0];
+      if (file) {
+         var fileFs = new FS.File(file);
+         var fileId = Files.insert(fileFs, function(err, result) {
+            if(err) throw new Meteor.Error(err);
+         });
+         update.fileId = fileId._id;
+      }
+
+      Meteor.call('newHistory', update);
    }
 });
 
@@ -141,6 +163,32 @@ Template.ticketCard.helpers({
    },
    'getSelectedTicket': function(ticketId){
       return Tickets.findOne(ticketId);
+   }
+});
+
+Template.ticketCard.events({
+   'click .js-update-ticket': function(event) {
+
+      event.preventDefault();
+      let ticketId = Session.get('ticketSelected');
+      console.log('updating ticket ',ticketId);
+
+      let update = {
+         data: $('#updateTicketText').val(),
+         ticketId: ticketId
+      }
+      console.log('update: ',update);
+
+      var file = $('#updateTicketFile').get(0).files[0];
+      if (file) {
+         var fileFs = new FS.File(file);
+         var fileId = Files.insert(fileFs, function(err, result) {
+            if(err) throw new Meteor.Error(err);
+         });
+         update.fileId = fileId._id;
+      }
+
+      Meteor.call('newHistory', update);
    }
 });
 

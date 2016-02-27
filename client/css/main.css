@@ -50,7 +50,7 @@ span.badge {
 }
 
 #login-buttons a{
-  color:white;
+  color:black;
   font-weight:bold;
 }
 
@@ -63,4 +63,9 @@ span.badge {
 
 .mdl-card__title{
   padding:16px 16px 0px 16px;
+}
+
+.loginCard {
+   padding-left:20px;
+   padding-top:20px;
 }

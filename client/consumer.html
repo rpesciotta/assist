@@ -1,7 +1,19 @@
 <template name="consumer">
-  <!-- always show new issue-->
-  {{> newIssue}}
-  {{> consumerIssues}}
+   {{#if currentUser}}
+      {{> newIssue}}
+      {{> consumerIssues}}
+   {{else}}
+      {{>pleaseLogin}}
+   {{/if}}
+</template>
+
+<template name="pleaseLogin">
+  <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">We are here to help!</h2>
+    </div>
+    <p class='loginCard'>Please loging to report an issue.</p>
+  </div>
 </template>
 
 <template name="newIssue">
@@ -49,9 +61,9 @@
 
 </template>
 <template name="consumerIssues">
-  {{#each tickets}}
-    {{> issueCard}}
-  {{/each}}
+     {{#each consumerTickets}}
+       {{> issueCard}}
+     {{/each}}
 </template>
 
 <template name="issueCard">
@@ -70,15 +82,31 @@
       </div>
       <div class="issueDetails">
         <div class="mdl-card__actions mdl-card--border">
-          <div class="ticketCard">
+          <div class="ticketCard" id="{{_id}}">
              Opened at: {{formatDate timestamp}}
              {{#each history _id}}
                {{> ticketCardItems}}
              {{/each}}
+             <!-- enter new comment here -->
+             <form class="updateticketForm" action="#">
+               <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--6-col-tablet">
+                 <div class="mdl-textfield mdl-js-textfield">
+                   <input id="updateTicketText" class="mdl-textfield__input" type="text">
+                   <label class="mdl-textfield__label">New comment</label>
+                 </div>
+               </div>
+               <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+                 <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="showFileupload">
+                   <i class="material-icons">add_a_photo</i>
+                 </button>
+                 <input type="file" accept="image/*;capture=camera" id="updateTicketFile">
+               </div>
+            </form>
+            <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored js-update-ticket" value="Send"/>
+            <!-- end of new comment -->
+
              <div style="float:right;">
-               <button class="mdl-button mdl-js-button mdl-button--accent" style="color:red">
-                Mark as fixed
-              </button>
+                <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored js-update-ticket" style="color:red" value="Mark as fixed"/>
              </div>
           </div>
         </div>
