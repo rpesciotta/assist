@@ -6,10 +6,16 @@ Template.registerHelper('formatDate', function(date) {
 	return moment(date).format('lll');
 });
 
+Template.registerHelper('tickets', function() {
+  return Tickets.find();
+});
+
+Template.registerHelper('firstMsg',function(id){
+   var history = TicketHistory.findOne({ticketId:id})
+   return history ? String(history.data).substring(0,50) : "no data";
+});
+
 Template.helpdesk.helpers({
-   'tickets': function() {
-      return Tickets.find();
-   },
    'ticketSelected': function() {
       return Session.get('ticketSelected');
    }
@@ -41,11 +47,7 @@ Template.helpdesk.events({
 Template.ticketList.helpers({
    'tickets': function() {
       return Tickets.find();
-   },
-   'firstMsg': function(id){
-      var history = TicketHistory.findOne({ticketId:id})
-      return history ? String(history.data).substring(0,50) : "no data";
-   },
+   }
 });
 
 Template.ticketList.events({
@@ -62,16 +64,17 @@ Template.ticketList.events({
 });
 
 Template.ticketCard.helpers({
-   'history': function(ticketId) {
-      return TicketHistory.find({ticketId: ticketId});
-   },
    'ticketSelected': function() {
       return Session.get('ticketSelected');
-   },
-   'isMessage': function(historyId) {
-      return TicketHistory.findOne(historyId).type == 2;
-   },
-   'isStatusChange': function(historyId) {
-      return TicketHistory.findOne(historyId).type == 1;
    }
+});
+
+Template.registerHelper('history', function(ticketId) {
+   return TicketHistory.find({ticketId: ticketId});
+});
+Template.registerHelper('isMessage', function(historyId) {
+  return TicketHistory.findOne(historyId).type == 2;
+});
+Template.registerHelper('isStatusChange', function(historyId) {
+  return TicketHistory.findOne(historyId).type == 1;
 });

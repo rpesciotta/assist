@@ -33,11 +33,12 @@ span.badge {
 .issueHeading .headingText{
   color: rgba(0,0,0,.54);
   font-weight: 500;
-  text-transform: uppercase;
   font-size:1em;
-  margin:0px;
   padding:0px;
-  display:inline;
+  display:inline-block;
+  height:1em;
+  overflow:hidden;
+  text-overflow: ellipsis;
 }
 
 .issueDetails{
@@ -46,4 +47,20 @@ span.badge {
 
 .cardVisible .issueHeading heading{
   font-size:1.2em;
+}
+
+#login-buttons a{
+  color:white;
+  font-weight:bold;
+}
+
+@media screen and (max-width: 1024px){
+  .mdl-layout__header-row {
+      height: 56px;
+      padding: 0 16px 0 16px;
+  }
+}
+
+.mdl-card__title{
+  padding:16px 16px 0px 16px;
 }

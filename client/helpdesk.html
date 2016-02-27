@@ -1,12 +1,6 @@
 <template name="helpdesk">
    <div class="helpdesk">
       <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-       <header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
-         <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">Assist</span>
-            <div class="mdl-layout-spacer"></div>
-         </div>
-       </header>
        <main class="mdl-layout__content mdl-color--grey-100">
          <div class="mdl-grid demo-content">
             <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
@@ -103,22 +97,26 @@
    <div class="ticketCard">
       Opened at: {{formatDate timestamp}}
       {{#each history ticketSelected}}
-         <table><tr class="row">
-            <td class="timestamp header"><small>{{formatDate timestamp}}</small></td>
-            <td class="header">{{userName}}</td>
-         {{#if isMessage _id}}
-            <td class="chat-message">
-               {{data}}
-               {{#if url}}
-                  <br><center><img src="{{url}}" class="thumbnail"></center>
-               {{/if}}
-            </td>
-         {{else}}
-            {{#if isStatusChange _id}}
-               <td class="chat-message">Status updated to <b>{{data}}</b></td>
-            {{/if}}
-         {{/if}}
-      </tr></table>
+        {{> ticketCardItems}}
       {{/each}}
    </div>
+</template>
+
+<template name="ticketCardItems">
+  <table><tr class="row">
+     <td class="timestamp header"><small>{{formatDate timestamp}}</small></td>
+     <td class="header">{{userName}}</td>
+  {{#if isMessage _id}}
+     <td class="chat-message">
+        {{data}}
+        {{#if url}}
+           <br><center><img src="{{url}}" class="thumbnail"></center>
+        {{/if}}
+     </td>
+  {{else}}
+     {{#if isStatusChange _id}}
+        <td class="chat-message">Status updated to <b>{{data}}</b></td>
+     {{/if}}
+  {{/if}}
+  </tr></table>
 </template>
