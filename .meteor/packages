@@ -20,9 +20,9 @@ autopublish             # Publish all data to the clients (for prototyping)
 insecure                # Allow all DB writes from clients (for prototyping)
 accounts-ui
 accounts-password
-codefights:blaze-material-ui
 cfs:standard-packages
 cfs:gridfs
 aldeed:autoform
 aldeed:simple-schema
 aldeed:collection2
+spectrum:material-design-lite

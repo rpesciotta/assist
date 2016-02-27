@@ -1,6 +1,52 @@
 <template name="consumer">
-   <div class="consumer">
-      <h1>Consumer view</h1>
-      You are a customer, upload a picture of your problem and we will take care of it!
-   </div>
+  <!-- always show new issue-->
+  {{> newIssue}}
+  {{> consumerIssues}}
+</template>
+
+<template name="newIssue">
+  <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">New issue</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+      <form action="#">
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="sample1">
+          <label class="mdl-textfield__label" for="sample1">Description of the issue</label>
+        </div>
+      </form>
+    </div>
+    <button class="mdl-button mdl-js-button mdl-button--raised">
+      Send
+    </button>
+    <div class="mdl-card__menu">
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+        <i class="material-icons">add_a_photo</i>
+      </button>
+    </div>
+  </div>
+</template>
+
+<template name="consumerIssues">
+  {{#each consumerIssues}}
+    {{> issueCard}}
+  {{/each}}
+</template>
+
+<template name="issueCard">
+  <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__actions mdl-card--border issueCard">
+      <div class="issueHeading">
+        <span class="statusText">{{status}}</span>
+        <span class="headingText">{{description}}</span>
+        <span class="badge" style="float:right;background-color:{{prioColor priority}}">{{priority}}</span>
+      </div>
+      <div class="issueDetails">
+        <div class="mdl-card__actions mdl-card--border">
+          Messages here?
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
