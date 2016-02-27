@@ -124,6 +124,10 @@ Template.ticketList.onRendered(() => {
 Template.ticketList.helpers({
    'tickets': function() {
       return Tickets.find();
+   },
+   'ticketIsClosed': function(ticketId) {
+      var ticket = Tickets.findOne(ticketId);
+      return ticket && ticket.status == 'Closed';
    }
 });
 

@@ -65,8 +65,12 @@
          <td class="mdl-data-table__cell--non-numeric" id="{{_id}}">{{priority}}</td>
          <td class="mdl-data-table__cell--non-numeric" id="{{_id}}">{{firstMsg _id}}</td>
          <td class="mdl-data-table__cell--non-numeric" id="{{_id}}">
-            {{timeToExpire _id}}
-            <div id="progress" class="mdl-progress mdl-js-progress customProgress"></div>
+            {{#if ticketIsClosed _id}}
+            Ticket is closed
+            {{else}}
+               {{timeToExpire _id}}
+               <div id="progress" class="mdl-progress mdl-js-progress customProgress"></div>
+            {{/if}}
          </td>
        </tr>
    {{else}}
