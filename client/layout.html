@@ -27,5 +27,14 @@
         {{/if}}
       </div>
     </main>
+  <div class="header" style="text-align:right">
+    {{> loginButtons align="right"}}
+  </div>
+  <div class="main">
+    {{#if isHelpdeskUser}}
+      {{> helpdesk}}
+    {{else}}
+      {{> consumer}}
+    {{/if}}
   </div>
 </template>

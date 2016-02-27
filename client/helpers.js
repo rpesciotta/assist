@@ -8,7 +8,10 @@ Template.registerHelper('formatDate', function(date) {
 
 Template.helpdesk.helpers({
    'tickets': function() {
-         return Tickets.find();
+      return Tickets.find();
+   },
+   'ticketSelected': function() {
+      return Session.get('ticketSelected');
    }
 });
 
@@ -34,9 +37,41 @@ Template.helpdesk.events({
    }
 });
 
-Template.ticketItem.helpers({
+// new template
+Template.ticketList.helpers({
+   'tickets': function() {
+      return Tickets.find();
+   },
    'firstMsg': function(id){
       var history = TicketHistory.findOne({ticketId:id})
       return history ? String(history.data).substring(0,50) : "no data";
+   },
+});
+
+Template.ticketList.events({
+   'click .ticketItem': function(event) {
+      var currentId = $(event.target).attr('id');
+
+      if (Session.get('ticketSelected')==currentId) {
+         Session.clear('ticketSelected');
+      }
+      else {
+         Session.set('ticketSelected', currentId);
+      }
+   }
+});
+
+Template.ticketCard.helpers({
+   'history': function(ticketId) {
+      return TicketHistory.find({ticketId: ticketId});
+   },
+   'ticketSelected': function() {
+      return Session.get('ticketSelected');
+   },
+   'isMessage': function(historyId) {
+      return TicketHistory.findOne(historyId).type == 2;
+   },
+   'isStatusChange': function(historyId) {
+      return TicketHistory.findOne(historyId).type == 1;
    }
 });
