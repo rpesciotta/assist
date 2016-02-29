@@ -34,3 +34,7 @@ Ths user interface is quite simple, and can be used for any purpose. For develop
 - use 2 different pages with a slider: one for new ticket, one for existing tickets
 - add ui notifications
 - when ticket time to responde is below 1min make it blink and shine
+- upgrade to meteor 1.3
+- make it ios installable app
+- adapt the helpdesk view to work on mobile
+- use mobile notifications instead of just ui notifications
