@@ -38,28 +38,28 @@ Template.registerHelper('timeToExpire', function(ticketId) {
 });
 
 Template.registerHelper('formatFromNow', function(date) {
-   return String(moment(date).fromNow());
+  return String(moment(date).fromNow());
 })
 
 Template.registerHelper('tickets', function() {
   let returns = Tickets.find({}).fetch().map((t) => {
-     var createdAt = moment(t.createdAt);
-     var target = moment(createdAt).add(timeToSolve(t.priority),'seconds');
-     t.sortField = moment(target).subtract(moment(createdAt));
-     return t;
+    var createdAt = moment(t.createdAt);
+    var target = moment(createdAt).add(timeToSolve(t.priority),'seconds');
+    t.targetTime = target;
+    return t;
   });
-  return _.sortBy(returns, (item) => item.sortField);
+  return _.sortBy(returns, (item) => -item.targetTime.toDate());
 });
 
 Template.registerHelper('firstMsg',function(id){
-   var history = TicketHistory.findOne({ticketId:id});
-   return history ? String(history.data).substring(0,50) : "no data";
+  var history = TicketHistory.findOne({ticketId:id});
+  return history ? String(history.data).substring(0,50) : "no data";
 });
 
 Template.helpdesk.helpers({
-   'ticketSelected': function() {
-      return Session.get('ticketSelected');
-   }
+  'ticketSelected': function() {
+    return Session.get('ticketSelected');
+  }
 });
 
 Template.newIssueForm.events({
@@ -97,7 +97,7 @@ Template.ticketList.onRendered(() => {
          if(ticketId) {
             var currentProgress = Session.get(ticketId+'-progress');
             if (currentProgress==undefined) {
-               currentProgress = 100;
+               currentProgress = 0;
             }
             else {
                // calculate what should be the current progress
@@ -122,13 +122,30 @@ Template.ticketList.onRendered(() => {
 });
 
 Template.ticketList.helpers({
-   'tickets': function() {
-      return Tickets.find();
-   },
-   'ticketIsClosed': function(ticketId) {
-      var ticket = Tickets.findOne(ticketId);
-      return ticket && ticket.status == 'Closed';
-   }
+  'helpDeskTickets': function() {
+    let tickets = Tickets.find({}).fetch().map((t) => {
+      var createdAt = moment(t.createdAt);
+      t.targetTime = moment(createdAt).add(timeToSolve(t.priority),'seconds');
+      return t;
+    });
+    tickets = _.filter(tickets, (t) => {
+      // return tickets that have not been closed
+      if(t.status!="Closed") return t;
+      // filter out ticket that were closed more than 5 minutes ago
+
+      // grab last status change history
+      var closeHistory = _.last(TicketHistory.find({ticketId: t._id, type: 1}).fetch());
+      var tolerance = moment().subtract(5,'minutes');
+      if(tolerance.isBefore(moment(closeHistory.timestamp))) return t;
+      //if (moment(closeHistory.timestamp).isBefore(tolerance)) return t;
+    });
+    return _.sortBy(tickets, (item) => -item.targetTime.toDate());
+  },
+
+  'ticketIsClosed': function(ticketId) {
+    var ticket = Tickets.findOne(ticketId);
+    return ticket && ticket.status == 'Closed';
+  }
 });
 
 Template.ticketList.events({
