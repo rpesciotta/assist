@@ -1,29 +1,30 @@
 # assist
-This is a generic platform that can be used for reporting problems, much in the sense of a ticketing system.
+This is a generic platform aimed at issue reporting in an easy and mobile way.
 
-Ths user interface is quite simple, and can be used for any purpose. For development purposes, we customized the application to work as a building management system where residents can report problems with the building to the management office.
+Ths user interface is quite simple, and can be used for different purposes. This version has been customized for a building or campus management purpose, where users/customers/tenants can easily report issues in buildings, facilities and services to the management.
 
 # Features:
-- user always logs in
-- 1 admin user must be created on startup (use a flag to tell it's admin)
-- central template uses a switch to display consumer or helpdesk template
+- user must log in before opening a ticket
+- admin user is created on startup
+- central template uses a switch to display consumer or helpdesk pages to be displayed
+- ticket priority defines the time for response
 
 ## Consumer view:
-- picture and text input
-   - ticket cannot be submitted with no text or priority is input
-   - once ticket is submitted, reset the input fields and add the new ticket to the open tickets list
-- list of open tickets
+- picture, text input and priority
+   - ticket cannot be submitted with no text
+   - if priority is not given, 'low' is assumed
+- a list of tickets opened by the same user is displayed in the home screen
 - when existing ticket is clicked, it should expand and display the contents of that ticket
-   - enable a button for the customer to close the ticket
-   - display input box for customer to add new comment
+   - enable a button for the customer to close the ticket - only the user who opened the ticket can close it
+   - display input box for customer to add new comment / picture
 
-## Helpdesk:
+## Helpdesk view:
 - display a list of tickets
-   - ordered by remaining time for response
-   - each ticket should display: prio, substring of the first message, time remaining with a live counter
+   - sorted by remaining time for response
+   - each ticket should display: prio, substring of the first message, time remaining (for fixing the issue) with a live counter
 - when a ticket is clicked, expand the view (like in consumer view) and display all details
-   - user should be able to change status from new to in progress, and from in progress to closed
-   - user should be able to write a message back to the user
+   - user should be able to change status from new to in progress - ticket can only be closed by the user who opened it.
+   - user should be able to write a message back to the user and/or attach a picture to it
 
 # Roadmap:
 - enable admin to create a ticket
@@ -38,3 +39,4 @@ Ths user interface is quite simple, and can be used for any purpose. For develop
 - make it ios installable app
 - adapt the helpdesk view to work on mobile
 - use mobile notifications instead of just ui notifications
+- move configurations to a separate collection and provide an admin interface to manage it
